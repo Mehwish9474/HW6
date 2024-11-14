@@ -1,7 +1,7 @@
 
 /******************************************************************
  *
- *   YOUR NAME / SECTION NUMBER
+ *   MEHWISH TABASSUM / 272 - 002
  *
  *   This java file contains the problem solutions for the methods lastBoulder,
  *   showDuplicates, and pair methods. You should utilize the Java Collection
@@ -63,13 +63,22 @@ public class ProblemSolutions {
      * returning the 0 if queue is empty else return pq.peek().
      */
 
-  public static int lastBoulder(int[] boulders) {
-
-      //
-      // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME / SECTION # ABOVE
-      //
-      return -1;
-  }
+     public static int lastBoulder(int[] boulders) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        for (int boulder : boulders) {
+            maxHeap.add(boulder);
+        }
+        
+        while (maxHeap.size() > 1) {
+            int y = maxHeap.poll();
+            int x = maxHeap.poll();
+            if (x != y) {
+                maxHeap.add(y - x);
+            }
+        }
+        
+        return maxHeap.isEmpty() ? 0 : maxHeap.poll();
+    }
 
 
     /**
@@ -89,13 +98,21 @@ public class ProblemSolutions {
      *               more than once in the input list. They will be in ascending order.
      */
 
-    public static ArrayList<String> showDuplicates(ArrayList<String> input) {
-
-        //
-        //  YOUR CODE GOES HERE
-        //
-        return new ArrayList<>();  // Make sure result is sorted in ascending order
-
+     public static ArrayList<String> showDuplicates(ArrayList<String> input) {
+        HashMap<String, Integer> counter = new HashMap<>();
+        for (String str : input) {
+            counter.put(str, counter.getOrDefault(str, 0) + 1);
+        }
+        
+        ArrayList<String> duplicates = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : counter.entrySet()) {
+            if (entry.getValue() > 1) {
+                duplicates.add(entry.getKey());
+            }
+        }
+        
+        Collections.sort(duplicates);
+        return duplicates;
     }
 
 
@@ -129,11 +146,18 @@ public class ProblemSolutions {
      *  Java Framework documentation in its use.
      */
 
-    public static ArrayList<String> pair(int[] input, int k) {
-
-        //
-        //  YOUR CODE GOES HERE
-        //
-        return new ArrayList<>();  // Make sure returned lists is sorted as indicated above
+     public static ArrayList<String> pair(int[] input, int k) {
+        HashSet<Integer> seen = new HashSet<>();
+        TreeSet<String> pairs = new TreeSet<>();
+        
+        for (int num : input) {
+            int target = k - num;
+            if (seen.contains(target)) {
+                pairs.add("(" + Math.min(num, target) + ", " + Math.max(num, target) + ")");
+            }
+            seen.add(num);
+        }
+        
+        return new ArrayList<>(pairs);
     }
 }

@@ -1,7 +1,7 @@
 
 /******************************************************************
  *
- *   YOUR NAME / SECTION NUMBER
+ *   MEHWISH TABASSUM / 272 - 002
  *
  *   Note, additional comments provided throughout this source code
  *   is for educational purposes
@@ -149,10 +149,11 @@ class PriorityQueue<E, P> {
      *                        newly inserted element
      */
 
-    public Node add(E e, P priority) {
-
-        // YOUR CODE GOES HERE
-        return null;
+     public Node add(E e, P priority) {
+        Node node = new Node(e, priority, tree.size());
+        tree.add(node);
+        pullUp(tree.size() - 1);
+        return node;
     }
 
 
@@ -166,9 +167,12 @@ class PriorityQueue<E, P> {
      * @return: boolean - true if element in queue, else false.
      */
 
-    public boolean contains(E e) {
-
-        // ADD YOUR CODE HERE
+     public boolean contains(E e) {
+        for (Node node : tree) {
+            if (node.value.equals(e)) {
+                return true;
+            }
+        }
         return false;
     }
 
